@@ -1,10 +1,10 @@
 import { createAnxietyReport } from "./logic.js";
 
 const quickIdeas = [
-  "老板临时让我今晚前交方案",
-  "投了很多简历，但一直没有回复",
-  "这个月开销太多，心里一直悬着",
-  "我怕一句话没说好，把关系搞僵",
+  "老板催方案",
+  "面试没回复",
+  "这个月又超支了",
+  "怕把关系聊崩",
 ];
 
 const quickChips = [...document.querySelectorAll("[data-chip]")];
@@ -22,7 +22,9 @@ const resultFields = {
 };
 
 function renderTrends() {
-  trendList.innerHTML = quickIdeas.map((item) => `<li>${item}</li>`).join("");
+  trendList.innerHTML = quickIdeas
+    .map((item) => `<span class="chip" aria-hidden="true">${item}</span>`)
+    .join("");
 }
 
 function showCopied(message) {
@@ -46,32 +48,32 @@ function renderReport(report, rawText) {
   resultFields.nextStep.textContent = report.nextStep;
   resultFields.message.textContent = report.message;
   resultPanel.hidden = false;
-  resultPanel.scrollIntoView({ behavior: "smooth", block: "start" });
 
   document.querySelector("#copy-message").onclick = () =>
-    copyText(report.message, "可直接发的话已复制");
+    copyText(report.message, "这条已复制");
 
   document.querySelector("#copy-report").onclick = () =>
     copyText(
       [
-        `我现在的事：${rawText}`,
+        `我现在最烦的是：${rawText}`,
         `先别慌：${report.judgement}`,
         `换个想法：${report.reframe}`,
-        `第一步：${report.nextStep}`,
+        `今天先做：${report.nextStep}`,
         `可直接发：${report.message}`,
       ].join("\n"),
-      "整份拆解结果已复制",
+      "结果已复制",
     );
 
   document.querySelector("#share-report").onclick = async () => {
     if (navigator.share) {
       await navigator.share({
-        title: "焦虑拆解局",
+        title: "焦虑外包器",
         text: report.shareText,
         url: window.location.href,
       });
       return;
     }
+
     await copyText(`${report.shareText} ${window.location.href}`, "分享文案已复制");
   };
 }
@@ -80,19 +82,12 @@ document.querySelector("#analyze-button").addEventListener("click", () => {
   const rawText = textarea.value.trim();
   if (!rawText) {
     textarea.focus();
-    showCopied("先把那件最烦的事写出来");
+    showCopied("先说说你在焦虑什么");
     return;
   }
 
   const report = createAnxietyReport(rawText);
   renderReport(report, rawText);
-});
-
-document.querySelector("#shuffle-trend").addEventListener("click", () => {
-  const items = [...quickIdeas];
-  quickIdeas.push(items.shift());
-  quickIdeas.splice(0, items.length, ...items);
-  renderTrends();
 });
 
 quickChips.forEach((button) => {

@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>焦虑拆解局 | 把焦虑交给 AI 先扛一下</title>
+    <title>焦虑外包器</title>
     <meta
       name="description"
-      content="把最近最烦的那件事丢进来，先得到一句判断、一个最小动作、还有一条你可以直接发出去的话。"
+      content="把最近最烦的那件事写下来，让 AI 先帮你理一理，再给你一句可以直接发出去的话。"
     />
     <link
       rel="icon"
@@ -14,123 +14,66 @@
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
-    <main class="page-shell">
-      <header class="topbar">
-        <div class="brand">
-          <div class="brand-mark">焦</div>
-          <span>清溪的焦虑拆解局</span>
-        </div>
-        <nav class="topbar-links">
-          <a href="https://qingxihub.com/tools" target="_blank" rel="noreferrer">更多工具</a>
-          <a href="https://v.douyin.com/fZNLm0iCwfA/" target="_blank" rel="noreferrer">抖音</a>
-          <a href="https://xhslink.com/m/3pdBcBDfYmx" target="_blank" rel="noreferrer">小红书</a>
-        </nav>
-      </header>
+  <body class="anxiety-theme">
+    <main class="shell">
+      <section class="card">
+        <div class="hero-emoji">🌊</div>
+        <h1>焦虑外包器</h1>
+        <p class="subtitle">不是安慰你，是先替你把这件事理一理</p>
 
-      <section class="hero">
-        <article class="panel hero-copy">
-          <span class="eyebrow">别急着崩，先把最烦的那件事扔进来</span>
-          <h1>不是安慰你。<br />是先替你把这团乱麻拆开。</h1>
-          <p>
-            这里不只会说“别焦虑”。你会拿到一句更诚实的判断、一个今天能做的最小动作，以及一条你可以直接发给别人或发给自己的话。
-          </p>
+        <div class="chip-row compact" id="trend-list"></div>
 
-          <div class="hero-stats">
-            <div class="hero-stat">
-              <strong>5</strong>
-              <span>类常见焦虑</span>
-            </div>
-            <div class="hero-stat">
-              <strong>3</strong>
-              <span>块拆解结果</span>
-            </div>
-            <div class="hero-stat">
-              <strong>1</strong>
-              <span>条可直接发的话</span>
-            </div>
-          </div>
-        </article>
-
-        <aside class="panel hero-side">
-          <section class="side-card">
-            <h2>今天大家都在外包什么</h2>
-            <ul id="trend-list"></ul>
-          </section>
-          <section class="side-card">
-            <h2>这页为什么更容易被分享</h2>
-            <p>因为它不是温柔空话，而是“太像我现在的情况了，而且这句我马上就能发出去”。</p>
-          </section>
-        </aside>
-      </section>
-
-      <section class="panel builder">
-        <h2>先选一个最接近你的状态</h2>
-        <div class="quick-grid">
-          <button class="quick-chip" data-chip="老板临时让我今晚前交方案">
-            <strong>工作压顶</strong>
-            <span>老板催、开会多、项目卡、时间不够。</span>
-          </button>
-          <button class="quick-chip" data-chip="投了很多简历，但一直没有回复">
-            <strong>求职悬着</strong>
-            <span>简历、面试、海投、等回复，全都很磨人。</span>
-          </button>
-          <button class="quick-chip" data-chip="这个月开销太多，心里一直悬着">
-            <strong>钱不够用</strong>
-            <span>房租、账单、收入、还款，想到就发紧。</span>
-          </button>
-          <button class="quick-chip" data-chip="我怕一句话没说好，把关系搞僵">
-            <strong>关系拉扯</strong>
-            <span>同事、朋友、家人、对象，一直在脑补后果。</span>
-          </button>
-        </div>
-
-        <label for="anxiety-input">把最近最烦的那件事写下来</label>
         <textarea
           id="anxiety-input"
-          class="detail-field"
-          placeholder="比如：老板催我汇报，项目截止时间也快到了。或者：我怕面试又黄了，今天一直不敢投简历。"
+          class="text-area"
+          placeholder="输入最近让你焦虑的事..."
         ></textarea>
 
-        <div class="builder-actions">
-          <button id="analyze-button" class="primary-button">交给 AI 先扛一下</button>
-          <button id="shuffle-trend" class="ghost-button">换一组大家最近在烦的事</button>
-        </div>
-        <p id="copied-hint" class="muted-note" hidden>已复制</p>
-      </section>
-
-      <section id="result-panel" class="panel result-panel" hidden>
-        <h2>你的拆解结果</h2>
-        <p id="result-category" class="result-meta"></p>
-
-        <div class="result-grid">
-          <article class="result-card">
-            <h3>先别慌，这句最重要</h3>
-            <p id="result-judgement"></p>
-          </article>
-          <article class="result-card">
-            <h3>换个想法，不要被整件事压住</h3>
-            <p id="result-reframe"></p>
-          </article>
-          <article class="result-card">
-            <h3>今天只做这一步</h3>
-            <p id="result-next-step"></p>
-          </article>
-          <article class="result-card">
-            <h3>你可以直接发的话</h3>
-            <p id="result-message"></p>
-            <button id="copy-message" class="copy-chip">复制这一条</button>
-          </article>
+        <div class="chip-row">
+          <button class="chip" data-chip="老板临时让我今晚前交方案">工作压顶</button>
+          <button class="chip" data-chip="投了很多简历，但一直没有回复">求职悬着</button>
+          <button class="chip" data-chip="这个月开销太多，心里一直悬着">钱不够用</button>
+          <button class="chip" data-chip="我怕一句话没说好，把关系搞僵">关系拉扯</button>
         </div>
 
-        <div class="footer-note">
-          焦虑不是非得马上消失，但它不该继续在脑子里长成一整片雾。先把它拆开，再决定下一步。
+        <div class="button-row">
+          <button id="analyze-button" class="btn btn-primary">外包给 AI 🤖</button>
+          <button id="copy-report" class="btn btn-secondary">📋 复制结果</button>
+          <button id="share-report" class="btn btn-secondary">📤 分享</button>
         </div>
+        <p id="copied-hint" class="hint" hidden>已复制</p>
 
-        <div class="result-actions">
-          <button id="copy-report" class="primary-button">复制整份结果</button>
-          <button id="share-report" class="ghost-button">分享给朋友</button>
-        </div>
+        <section id="result-panel" class="result-panel" hidden>
+          <div class="result-main">
+            <p class="result-tag" id="result-category"></p>
+            <p class="result-text" id="result-judgement"></p>
+          </div>
+
+          <div class="detail-panel">
+            <article class="detail-item">
+              <span>换个想法</span>
+              <p id="result-reframe"></p>
+            </article>
+            <article class="detail-item">
+              <span>今天只做这一步</span>
+              <p id="result-next-step"></p>
+            </article>
+            <article class="detail-item">
+              <span>你可以直接发的话</span>
+              <p id="result-message"></p>
+              <button id="copy-message" class="mini-copy">复制这一条</button>
+            </article>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <p>我是 <strong>清溪</strong>，关注我获取更多 AI 提效技巧</p>
+          <div class="footer-links">
+            <a href="https://xhslink.com/m/3pdBcBDfYmx" target="_blank" rel="noreferrer">📕 小红书</a>
+            <a href="https://v.douyin.com/fZNLm0iCwfA/" target="_blank" rel="noreferrer">🎬 抖音</a>
+            <a href="https://qingxihub.com/tools" target="_blank" rel="noreferrer">🛠️ AI工具箱</a>
+          </div>
+        </footer>
       </section>
     </main>
 

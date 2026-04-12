@@ -67,7 +67,7 @@ function renderReport(report, rawText) {
   document.querySelector("#share-report").onclick = async () => {
     if (navigator.share) {
       await navigator.share({
-        title: "焦虑外包器",
+        title: "焦虑外包AI",
         text: report.shareText,
         url: window.location.href,
       });
